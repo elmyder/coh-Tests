@@ -17,11 +17,11 @@ Very similar to the proc rate test script but written to compute average PPM (pr
 A bit complicated, but this script can be used to compute the exact dps done in a variety of combinations. For instance: 
 
 - The dps done by you overall
-- The dps done by you overall to a specific target
-- The dps done by you using a specific power
-- The dps done by you using a specific power to a specific target
+- The dps done by you to a specific target
+- Either of the above two using a specific power
 - The dps done to you overall
 - The dps done by a specific target to you
+- Either of the above two with a specific power
 
 In addition, it can be used to output total damage instead of dps, as well as output an entire log of the relevant combat log lines. 
 
