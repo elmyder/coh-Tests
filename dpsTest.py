@@ -8,7 +8,9 @@ filename = r""  #path to log file in quotes
 source = ""     #source can be "Me", "Any", or name of source
 target = ""     #target can be "Me", "Any", or name of target
 power = ""      #power can be "Any" or name of power
+
 # Note that if you specify a power it will NOT count procs!
+
 
 start = 0       #first line of test in log file
 end = 10000     #last line of test in log file 
@@ -50,12 +52,12 @@ def dps(filename,source,target,power,start,end):
     pat4 = re.compile("damage")
     log = []            #log will contain a list of all lines containing patterns 1 and 2
     time = []           #time will contain a list of all times (in seconds from midnight) when the line occurred
-    dmg1 = []           #raw data file to build dmg
+    dmgRaw = []         #raw data file to build dmg
     dmg = []            #dmg will contain a list of the damage that occurred at each corresponding line in log
     linenum = start     #start line count at start point (line count starts at 0)
     
-    with open(filename,"rt",errors="ignore") as filename:
-        for line in itertools.islice(filename,start,None):
+    with open(filename,"rt",errors="ignore") as f:
+        for line in itertools.islice(f,start,None):
             linenum += 1    #add one to line count for each line after start
             if linenum > end:
                 break       #stop after end point
@@ -71,13 +73,13 @@ def dps(filename,source,target,power,start,end):
             time.append(int(log[i][11]+log[i][12])*3600+int(log[i][14]+log[i][15])*60+int(log[i][17]+log[i][18]))
             
         for i in range(len(log)):
-            dmg1.append([int(s) for s in re.findall(r'\b\d+\b', log[i])])
+            dmgRaw.append([int(s) for s in re.findall(r'\b\d+\b', log[i])])
             
-        for i in range(len(dmg1)):
-            if len(dmg1[i]) == 7:
-                dmg.append(dmg1[i][6]*0.01)
-            if len(dmg1[i]) == 8:
-                dmg.append(dmg1[i][6]+dmg1[i][7]*0.01)
+        for i in range(len(dmgRaw)):
+            if len(dmgRaw[i]) == 7:
+                dmg.append(dmgRaw[i][6]*0.01)
+            if len(dmgRaw[i]) == 8:
+                dmg.append(dmgRaw[i][6]+dmgRaw[i][7]*0.01)
     
         damage = sum(dmg)
         duration = time[-1]-time[0]
